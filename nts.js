@@ -113,7 +113,7 @@ function generateConfig() {
         files = fs.readdirSync(sPath);
         _.each(files, function(file) {
             if(file === '.svn') {
-                svnPaths.push(sPath);
+                svnPaths.push(d);
             }
         });
     });
@@ -122,11 +122,19 @@ function generateConfig() {
     totalInfos = svnPaths.length;
 
     _.each(svnPaths, function(dir) {
-        var info = spawn('svn', ['info'], {cwd: dir});
+        var sPath = p.join(process.cwd(), dir),
+            info = spawn('svn', ['info'], {cwd: sPath});
 
         info.stdout.on('data', function(data) {
             // parse the info and add to config
-            console.log(dir + " ::: " + data);
+            var lines = (data + "").split("\r\n");
+            for(var i=0, len = lines.length; i<len; i++) {
+                if(lines[i].substr(0, 5) === 'URL: ') {
+                    config[dir] = {};
+                    config[dir].url = lines[i].substr(5);
+                }
+                //console.log(dir + " ::: " + i + " = " + lines[i]);
+            }
         });
 
         info.on('exit', function(code) {
