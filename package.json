@@ -1,0 +1,20 @@
+{
+  "name": "node-tools",
+  "version": "0.0.1",
+  "description": "multi project tools, source control, build, etc.",
+  "main": "nts.js",
+  "bin" : { "nts" : "nts.js" },
+  "dependencies": {
+    "lodash": "*",
+    "commander": "*",
+    "ansi": "*"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "svn"
+  ],
+  "author": "Ben Sparks",
+  "license": "MIT"
+}
